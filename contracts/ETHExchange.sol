@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 import "./ExchangeToken.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-
+import "hardhat/console.sol";
 contract ETHExchange is ReentrancyGuard {
  ExchangeToken public exchangeToken;
  uint256 public exchangeRate;
@@ -35,11 +35,13 @@ contract ETHExchange is ReentrancyGuard {
     require(tokenAmount > 0, "Must send tokens to get ETH");
     uint256 ethAmount = tokenAmount / exchangeRate;
     require(address(this).balance >= ethAmount, "Contract does not have enough ETH");
-
+   console.log("Contract ETH balance:", address(this).balance);
+   console.log("ETH to send:", ethAmount);
     exchangeToken.burn(msg.sender, tokenAmount);
     (bool success,) = payable(msg.sender).call{value: ethAmount}("");
     require(success, "ETH transfer failed");
     emit TokenToEth(msg.sender, tokenAmount, ethAmount);
+       console.log("!! after Contract ETH balance:", address(this).balance);
  }
 
  function setExchangeRate(uint256 _newRate) external onlyOwner {
