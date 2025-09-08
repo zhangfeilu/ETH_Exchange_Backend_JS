@@ -25,7 +25,7 @@ describe('test ETHExchange contract', function () {
     );
     await ethExchange.deployed();
 
-    const tokenAddress = await ethExchange.exchangeToken();
+    const tokenAddress = await ethExchange.getExchangeTokenAddress();
     ExchangeTokenContract = await ethers.getContractFactory('ExchangeToken');
     exchangeToken = await ExchangeTokenContract.attach(tokenAddress);
   });
@@ -36,11 +36,11 @@ describe('test ETHExchange contract', function () {
     });
 
     it('Should set the correct initial exchange rate', async function () {
-      expect(await ethExchange.exchangeRate()).to.equal(initialExchangeRate);
+      expect(await ethExchange.getExchangeRate()).to.equal(initialExchangeRate);
     });
 
     it('Should have a token contract', async function () {
-      const tokenAddress = await ethExchange.exchangeToken();
+      const tokenAddress = await ethExchange.getExchangeTokenAddress();
       expect(tokenAddress).to.be.properAddress;
     });
 
@@ -190,12 +190,12 @@ describe('test ETHExchange contract', function () {
       it('Should allow owner to update exchange rate', async function () {
         const newRate = ethers.utils.parseEther('2000');
         await ethExchange.setExchangeRate(newRate);
-        expect(await ethExchange.exchangeRate()).to.equal(newRate);
+        expect(await ethExchange.getExchangeRate()).to.equal(newRate);
       });
 
       it('Should emit ExchangeRateUpdated event', async function () {
         const newRate = ethers.utils.parseEther('2000');
-        const oldRate = await ethExchange.exchangeRate();
+        const oldRate = await ethExchange.getExchangeRate();
         await expect(ethExchange.setExchangeRate(newRate))
           .to.emit(ethExchange, 'ExchangeRateUpdated')
           .withArgs(oldRate, newRate);

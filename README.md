@@ -2,6 +2,9 @@
 
 本项目是一个基于 Hardhat 的以太坊去中心化交易所（ETH Exchange）示例，允许用户在 ETH 和自定义 ERC20 代币之间进行兑换。项目包含完整的智能合约、部署脚本、测试用例和常用开发工具配置，适合学习和二次开发。
 
+配套前端代码: https://github.com/zhangfeilu/ETH-Exchange-Frontend-react
+合约地址：https://sepolia.etherscan.io/address/0x7F9F223d0AD9Ca4dEee49FD4AdAd06Ac6E20dc91
+
 ---
 
 ## 功能介绍
@@ -113,4 +116,4 @@ npx hardhat deploy --network sepolia
 
 ---
 
-## License
+## License MIT

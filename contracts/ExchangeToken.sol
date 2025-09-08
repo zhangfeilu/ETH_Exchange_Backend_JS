@@ -24,4 +24,8 @@ contract ExchangeToken is ERC20 {
     function setExchangeContract(address _exchangeContract) external onlyExchangeContract {
         exchangeContract = _exchangeContract;
     }
+    
+    function decimals() public pure override returns (uint8) {
+        return 18;
+  }
 }
